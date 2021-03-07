@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Credit Card</title>
+    <meta name="viewport"
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+
+        .container {
+            border-radius: 5px;
+        }
+
+        #cardForm {
+            height: 100%;
+            max-height: 500px;
+            margin: 25px 16px 20px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        .textfield--float-label {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .image-block {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .hosted-field--label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #506165;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+        }
+
+        #date-format {
+            font-weight: normal !important;
+            font-size: 10px !important;
+        }
+
+        .hosted-field {
+            margin-bottom: 10px;
+            height: 28px;
+            display: block;
+            background-color: transparent;
+            font-size: 16px;
+            font-weight: normal;
+            color: #506165;
+            font-family: 'Poppins', sans-serif;
+            border-bottom: 1px solid #969FA6;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            outline: none;
+            border-radius: 0;
+            position: relative;
+            box-shadow: none;
+            padding: 3px 0;
+            min-width: 250px;
+        }
+
+
+        .panel__footer {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pay-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #7852A9;
+            background: linear-gradient(274deg, #BE49DF 0%, #8A66B7 100%);
+            font-size: 16px;
+            font-weight: normal;
+            color: #FFFFFF;
+            font-family: 'Poppins', sans-serif;
+            width: 145px;
+            height: 38px;
+            border-radius: 20px;
+            outline: none;
+            box-shadow: none;
+        }
+
+        .braintree-hosted-fields-focused {
+            border-bottom: 1px solid #8A66B7;
+            transition: all 200ms ease;
+        }
+
+        .braintree-hosted-fields-invalid {
+            border-bottom: 1px solid red;
+            transition: all 200ms ease;
+        }
+
+        img {
+            width: 170px;
+            height: 105px;
+        }
+    </style>
+</head>
+
+<body class="container">
+    <form id="cardForm">
+        <div class="image-block">
+            <img src="<%=domain%>/images/card.png" alt="">
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="card-number"> CARD NUMBER</label>
+            <div id="card-number" class="hosted-field"></div>
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="expiration-date"> EXPIRATION DATE <span
+                    id="date-format">(MM/YY)</span></label>
+            <div id="expiration-date" class="hosted-field"></div>
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="cvv">CVV</label>
+            <div id="cvv" class="hosted-field"></div>
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="postal-code">POSTAL CODE</label>
+            <div id="postal-code" class="hosted-field"></div>
+        </div>
+        <div class="panel__footer">
+            <button class="pay-button" id="add-credit-card">Add</button>
+        </div>
+    </form>
+    <script src="https://js.braintreegateway.com/web/3.55.0/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.55.0/js/hosted-fields.min.js"></script>
+
+    <script>
+        const token = '<%= clientToken %>';
+        const submitButton = document.getElementById('add-credit-card');
+
+        braintree.client.create({
+            authorization: token
+        }, (err, clientInstance) => {
+            if (err) {
+                if (window && window.ReactNativeWebView) {
+                    setTimeout(() => {
+                        window.ReactNativeWebView.postMessage(JSON.stringify({ success: false, click: false, ...err }));
+                    }, 1000);
+                }
+                submitButton.setAttribute("disabled", "disabled");
+                submitButton.setAttribute('style', 'background-color: rgba(47, 55, 73, 0.6);background: rgba(47, 55, 73, 0.6);');
+                return;
+            }
+
+            submitButton.removeAttribute("disabled");
+            submitButton.removeAttribute('style');
+
+            braintree.hostedFields.create({
+                client: clientInstance,
+                styles: {
+                    'input': {
+                        'font-size': '16px',
+                        'font-weight': 'normal',
+                        'color': '#506165',
+                        'font-family': 'Poppins, sans-serif',
+                    },
+                    ':focus': {
+                        'color': '#506165'
+                    },
+                    '.valid': {
+                        'color': '#506165'
+                    },
+                    '.invalid': {
+                        'color': 'red'
+                    }
+                },
+                fields: {
+                    number: {
+                        selector: '#card-number',
+                        placeholder: '.... .... ... ....'
+                    },
+                    postalCode: {
+                        selector: '#postal-code',
+                        placeholder: '..... '
+                    },
+                    cvv: {
+                        selector: '#cvv',
+                        placeholder: '...'
+                    },
+                    expirationDate: {
+                        selector: '#expiration-date',
+                        placeholder: '(MM/YY)'
+                    },
+                }
+            }, (hostedFieldsErr, hostedFieldsInstance) => {
+                if (hostedFieldsErr) {
+                    if (window && window.ReactNativeWebView) {
+                        setTimeout(() => {
+                            window.ReactNativeWebView.postMessage(JSON.stringify({ success: false, click: false, ...hostedFieldsErr }));
+                        }, 1000);
+                    }
+                    submitButton.setAttribute("disabled", "disabled");
+                    submitButton.setAttribute('style', 'background-color: rgba(47, 55, 73, 0.6);background: rgba(47, 55, 73, 0.6);');
+                    return;
+                }
+                submitButton.removeAttribute("disabled");
+                submitButton.removeAttribute('style');
+
+                function findLabel(field) {
+                    return document.querySelector('.hosted-field--label[for="' + field.container.id + '"]')
+                }
+
+                hostedFieldsInstance.on('focus', (event) => {
+                    const field = event.fields[event.emittedBy];
+
+                    findLabel(field).classList.add('label-float');
+                    findLabel(field).classList.remove('filled');
+                });
+
+                hostedFieldsInstance.on('blur', (event) => {
+                    const field = event.fields[event.emittedBy];
+                    const label = findLabel(field);
+
+                    if (field.isEmpty) {
+                        label.classList.remove('label-float');
+                    } else if (field.isValid) {
+                        label.classList.add('filled');
+                    } else {
+                        label.classList.add('invalid');
+                    }
+                });
+
+                hostedFieldsInstance.on('empty', (event) => {
+                    const field = event.fields[event.emittedBy];
+
+                    findLabel(field).classList.remove('filled');
+                    findLabel(field).classList.remove('invalid');
+                });
+
+                hostedFieldsInstance.on('validityChange', (event) => {
+                    const field = event.fields[event.emittedBy];
+                    const label = findLabel(field);
+
+                    if (field.isPotentiallyValid) {
+                        label.classList.remove('invalid');
+                    } else {
+                        label.classList.add('invalid');
+                    }
+                    submitButton.removeAttribute("disabled");
+                    submitButton.removeAttribute('style');
+                });
+
+                submitButton.addEventListener('click', (event) => {
+                    window.ReactNativeWebView.postMessage(JSON.stringify({ success: true, click: true }));
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    event.stopPropagation();
+                    hostedFieldsInstance.tokenize((hostedFieldsInstanceErr, payload) => {
+                        if (hostedFieldsInstanceErr) {
+                            if (window && window.ReactNativeWebView) {
+                                setTimeout(() => {
+                                    window.ReactNativeWebView.postMessage(JSON.stringify({ success: false, click: false, ...hostedFieldsInstanceErr }));
+                                }, 1000);
+                            }
+                            submitButton.setAttribute("disabled", "disabled");
+                            submitButton.setAttribute('style', 'background-color: rgba(47, 55, 73, 0.6);background: rgba(47, 55, 73, 0.6);');
+                            return;
+                        }
+                        if (window && window.ReactNativeWebView) {
+                            setTimeout(() => {
+                                window.ReactNativeWebView.postMessage(JSON.stringify({ success: true, click: false, ...payload }));
+                            }, 1000);
+                        }
+                        submitButton.removeAttribute("disabled");
+                        submitButton.removeAttribute('style');
+                        return;
+                    });
+                })
+            });
+        });
+    </script>
+</body>
+
+</html>

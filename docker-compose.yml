@@ -1,0 +1,23 @@
+version: '2.1'
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    command: sh -c "yarn && yarn start:dev"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "db"
+    env_file: ./env/local-docker.env
+    restart: always
+  db:
+    image: kartoza/postgis:11.0-2.5
+    volumes:
+      - pgdata-volume:/var/lib/postgresql:Z
+    env_file: ./env/local-docker.env
+    ports:
+      - "5432:5432"
+    restart: always
+volumes:
+  pgdata-volume: {}

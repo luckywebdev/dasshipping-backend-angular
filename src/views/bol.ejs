@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+
+        body {
+            margin: 0;
+            font-style: normal;
+            font-size: 13px;
+            line-height: 18px;
+            letter-spacing: 0.15em;
+            color: rgba(47, 55, 73, 0.9);
+            font-family: Open Sans;
+            width: 595px;
+            height: 714px;
+        }
+
+        .header-rectangle {
+            width: calc(100% - 200px);
+            height: 70px;
+            background-image: url("<%=domain%>/images/Rectangle.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .logo {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 165px;
+            height: 25px;
+            z-index: 1;
+            padding: 25px 15px 20px 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .content {
+            width: 100%;
+        }
+
+        .company-name {
+            font-size: 7px;
+            padding-right: 10px;
+            float: right;
+            letter-spacing: 0.10em;
+            text-align: right;
+            line-height: 12px;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+            color: black;
+        }
+
+        .title span:first-child {
+            color: rgba(0, 185, 224, 0.8);
+            font-size: 16px;
+            line-height: 15px;
+            text-align: right;
+        }
+
+        .info {
+            padding: 5px 35px;
+        }
+
+        .bold {
+            font-weight: bold
+        }
+
+        table {
+            font-size: 8px;
+            border-style: hidden;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table td,
+        table th {
+            border-right: 1px solid rgba(0, 185, 224, 0.7);
+            border-top: none;
+            border-bottom: none;
+            border-left: none;
+            padding: 2px;
+            text-align: center;
+        }
+
+        table.left td,
+        table.left th {
+            text-align: left;
+        }
+
+        .car {
+            width: 50%;
+            float: left;
+            height: 250px;
+            position: relative;
+        }
+
+        .car-text {
+            font-size: 10px;
+        }
+
+        .damages {
+            width: 100%;
+            font-size: 7px;
+        }
+
+        .damages-title {
+            text-align: center;
+            font-size: 8px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .circle {
+            letter-spacing: 0.05em;
+            width: 15px;
+            border-radius: 50%;
+            color: green;
+            height: 15px;
+            border: 1px solid green;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .square {
+            letter-spacing: 0.05em;
+            width: 15px;
+            color: red;
+            height: 15px;
+            border: 1px solid red;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .damage-icon-block {
+            padding: 0 0 5px 10px;
+        }
+
+        .inspection-illustration {
+            display: inline-block;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .info-damages {
+            display: inline-block;
+            width: 100%;
+        }
+
+        .details-link {
+            width: 54%;
+            text-align: right;
+            display: inline-block;
+        }
+
+        .details-link span {
+            height: 20px;
+            background: rgba(47, 55, 73, 0.2);
+            border-radius: 4px;
+            display: inline-block;
+            padding: 0 3px;
+        }
+
+        a {
+            color: #9a2ae0;
+            text-decoration: none;
+        }
+
+        .damage {
+            position: absolute;
+            font-size: 5px;
+            width: 6px;
+            height: 6px;
+            line-height: 6px;
+            text-align: center;
+            letter-spacing: 0;
+            z-index: 1;
+        }
+
+        .circle-damage {
+            color: green;
+            border: 1px solid green;
+            border-radius: 50%;
+        }
+
+        .square-damage {
+            color: red;
+            border: 1px solid red;
+        }
+
+        hr {
+            border-top: 1px solid rgba(0, 185, 224, 0.7);
+        }
+    </style>
+</head>
+
+<body>
+    <header style="position: relative" id="pageHeader">
+        <div class="header-rectangle"></div>
+        <div class="logo">
+            <%= order.company.name %>
+        </div>
+    </header>
+    <div class="content" id="pageContent">
+        <div style="width: 100%; height: 55px;">
+            <div class="company-name">
+                <%= order.company.address %>,
+                <br>
+                <%= order.company.city %>,
+                <%= order.company.state %>,
+                <%= order.company.zip %>
+                <br>
+                Phone: <%= order.company.officePhone %>
+                <br>
+                E-mail: <%= order.company.email %>
+            </div>
+        </div>
+        <div class="title">
+            <span>BILL OF LADING</span> / <span>vehicle inspection report</span>
+        </div>
+        <div class="info">
+            <%if (order.externalId) { %>
+            <div style="font-size: 10px">LOAD ID: <%= order.externalId %></div>
+            <% } else{ %>
+            <div style="font-size: 10px">LOAD ID: <%= order.uuid %></div>
+            <% } %>
+            <div>
+                <hr>
+                <table class="left" style="width: 100%">
+                    <tr>
+                        <td class="bold" style="width: 50%">ORIGIN</td>
+                        <td class="bold" style="padding-left: 10px;width: 50%">DESTINATION</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%"><%= order.pickLocation.address %>, <%= order.pickLocation.city %>
+                            , <%= order.pickLocation.state %>, <%= order.pickLocation.zipCode %>
+                        </td>
+                        <td style="padding-left: 10px;width: 50%"><%= order.deliveryLocation.address %>,
+                            <%= order.deliveryLocation.city %>, <%= order.deliveryLocation.state %>
+                            , <%= order.deliveryLocation.zipCode %></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%"><span class="bold">Contact:
+                            </span><%= order.sender.firstName + ' ' + order.sender.lastName %>
+                        </td>
+                        <td style="padding-left: 10px;width: 50%"><span class="bold">Contact:
+                            </span><%= order.receiver.firstName + ' ' + order.receiver.lastName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%"><span class="bold">Phone: </span><%= order.sender.phoneNumber %></td>
+                        <td style="padding-left: 10px;width: 50%"><span class="bold">Phone:
+                            </span><%= order.receiver.phoneNumber %>
+                        </td>
+                    </tr>
+                </table>
+                <hr>
+
+                <%if (pickUpInspection.driverNotes.length > 0) { %>
+                <div style="font-size: 8px; display: table; width: 100%;">
+                    <div style="width: 24%; display: table-cell; vertical-align: middle;">DRIVER NOTES:</div>
+                    <div style="width: 75%; display: table-cell;">
+                        <span><%= pickUpInspection.driverNotes %>. </span>
+                    </div>
+                </div>
+                <% } %>
+                <%if (deliveryInspection.driverNotes.length > 0 || noDamages) { %>
+                <div style="font-size: 8px; display: table; width: 100%;">
+                    <div style="width: 24%; display: table-cell; vertical-align: middle;">CUSTOMER NOTES:</div>
+                    <div style="width: 75%; display: table-cell;">
+                        <span><%= noDamages ? 'Vehicle delivered with NO new damages' : deliveryInspection.driverNotes %>.
+                        </span>
+                    </div>
+                </div>
+                <% } %>
+                <%if (deliveryInspection.driverNotes.length > 0 || pickUpInspection.driverNotes.length > 0 || noDamages) { %>
+                <hr>
+                <% } %>
+
+                <div style="font-size: 7px; display: inline-block;width: 100%;letter-spacing: 0.07em;">
+                    <div style="display: inline-block;width: 45%;">
+                        <span class="circle" style="background-color: green;">A</span>
+                        Circles - pickup damages
+
+                        <span class="square" style="background-color: red;">A</span>
+                        Squares - delivery damages
+                    </div>
+                    <div class="details-link">
+                        <span>See inspection photos and details <a
+                                href="<%= photosInspection %>"><%= photosInspection %></a></span>
+                    </div>
+                </div>
+
+                <div class="info-damages">
+                    <div class="damages">
+                        <div class="damages-title">INSPECTION DAMAGE MARKINGS</div>
+                        <div style="width: 100%">
+                            <div style="width: 24%; display: inline-block;vertical-align: top;">
+                                <div class="damage-icon-block"><span class="circle">S</span> - Scratched</div>
+                                <div class="damage-icon-block"><span class="circle">PC</span> - Paint Chip</div>
+                                <div class="damage-icon-block"><span class="circle">BR</span> - Broken</div>
+                                <div class="damage-icon-block"><span class="circle">D</span> - Dented</div>
+                                <div class="damage-icon-block"><span class="circle">B</span> - Bent</div>
+                            </div>
+                            <div style="width: 24%; display: inline-block;vertical-align: top;">
+                                <div class="damage-icon-block"><span class="circle">BB</span> - Buffer Burned</div>
+                                <div class="damage-icon-block"><span class="circle">CR</span> - Cracked</div>
+                                <div class="damage-icon-block"><span class="circle">C</span> - Cut</div>
+                                <div class="damage-icon-block"><span class="circle">F</span> - Faded</div>
+                                <div class="damage-icon-block"><span class="circle">FF</span> - Foreign Fluid</div>
+                            </div>
+                            <div style="width: 24%; display: inline-block;vertical-align: top;">
+                                <div class="damage-icon-block"><span class="circle">G</span> - Gouged</div>
+                                <div class="damage-icon-block"><span class="circle">L</span> - Loose</div>
+                                <div class="damage-icon-block"><span class="circle">M</span> - Missing</div>
+                                <div class="damage-icon-block"><span class="circle">P</span> - Pitted</div>
+                                <div class="damage-icon-block"><span class="circle">R</span> - Rubbed</div>
+                            </div>
+                            <div style="width: 24%; display: inline-block;vertical-align: top;">
+                                <div class="damage-icon-block"><span class="circle">RU</span> - Rusted</div>
+                                <div class="damage-icon-block"><span class="circle">SL</span> - Soiled</div>
+                                <div class="damage-icon-block"><span class="circle">ST</span> - Stained</div>
+                                <div class="damage-icon-block"><span class="circle">T</span> - Torn</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <% for(var car of order.cars) { %>
+                <div class="inspection-illustration">
+                    <div class="car">
+                        <div style="position: absolute; top: 0; left: 60px;">
+                            <img src="<%= domain %>/images/car-front.png" width="65px">
+                            <% for (var damage of frontDamages) { %>
+                            <%if (car.id === damage.carId) { %>
+                            <span class="damage <%= damage.isDeliveryDamage ? 'square-damage' : 'circle-damage' %>"
+                                style="left: <%= damage.left %>%; top: <%= damage.top %>%;"><%= damage.type %></span>
+                            <% } %>
+                            <% } %>
+                        </div>
+                        <div style="position: absolute; top: 45px; left: 0;">
+                            <img src="<%= domain %>/images/left-preview.png" width="65px">
+                            <% for (var damage of leftDamages) { %>
+                            <%if (car.id === damage.carId) { %>
+                            <span class="damage <%= damage.isDeliveryDamage ? 'square-damage' : 'circle-damage' %>"
+                                style="left: <%= damage.left %>%; top: <%= damage.top %>%;"><%= damage.type %></span>
+                            <% } %>
+                            <% } %>
+                        </div>
+                        <div style="position: absolute; top: 55px; left: 65px;">
+                            <img src="<%= domain %>/images/front-preview.png" width="65px">
+                            <% for (var damage of topDamages) { %>
+                            <%if (car.id === damage.carId) { %>
+                            <span class="damage <%= damage.isDeliveryDamage ? 'square-damage' : 'circle-damage' %>"
+                                style="left: <%= damage.left %>%; top: <%= damage.top %>%;"><%= damage.type %></span>
+                            <% } %>
+                            <% } %>
+                        </div>
+                        <div style="position: absolute; top: 45px; left: 127px;">
+                            <img src="<%= domain %>/images/right-preview.png" width="65px">
+                            <% for (var damage of rightDamages) { %>
+                            <%if (car.id === damage.carId) { %>
+                            <span class="damage <%= damage.isDeliveryDamage ? 'square-damage' : 'circle-damage' %>"
+                                style="left: <%= damage.left %>%; top: <%= damage.top %>%;"><%= damage.type %></span>
+                            <% } %>
+                            <% } %>
+                        </div>
+                        <div style="position: absolute; top: 200px; left: 60px;">
+                            <img src="<%= domain %>/images/car-back.png" width="65px">
+                            <% for (var damage of backDamages) { %>
+                            <%if (car.id === damage.carId) { %>
+                            <span class="damage <%= damage.isDeliveryDamage ? 'square-damage' : 'circle-damage' %>"
+                                style="left: <%= damage.left %>%; top: <%= damage.top %>%;"><%= damage.type %></span>
+                            <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="car car-text">
+                        <strong>VIN:</strong><br>
+                        <%= car.vin %><br>
+                        <strong>YEAR / MAKE / MODEL:</strong><br>
+                        <%= car.year + ' ' + car.make + ' ' + car.model %><br>
+                        <strong>TYPE:</strong><br>
+                        <%= car.type %><br>
+                    </div>
+                </div>
+                <% } %>
+
+                <hr>
+                <table class="left">
+                    <tr>
+                        <th colspan="2" style="padding-left: 10px; width: 50%;">PICK UP:</th>
+                        <th colspan="2" style="padding-left: 10px; width: 50%;">DELIVERY:</th>
+                    </tr>
+                </table>
+                <hr>
+                <table class="left" style="min-height: 60px;">
+                    <tr>
+                        <td style="width: 25%;" valign="top"><strong>Driver:</strong><br><img
+                                src="<%= driverSignature %>" style="max-height: 35px; width: 90px"></td>
+                        <td style="width: 25%;" valign="top"><strong>Client:</strong><br><img
+                                src="<%= clientSignaturePickUp %>" style="max-height: 35px; width: 90px"></td>
+                        <td style="width: 25%;" valign="top"><strong>Driver:</strong><br><img
+                                src="<%= driverSignature %>" style="max-height: 35px; width: 90px"></td>
+                        <td style="width: 25%;" valign="top"><strong>Client:</strong><br><img
+                                src="<%= clientSignatureDelivery %>" style="max-height: 35px; width: 90px"></td>
+                    </tr>
+                </table>
+                <hr>
+
+                <table class="left">
+                    <tr>
+                        <td style="width: 25%;" valign="top"><strong>Full Name:</strong><br><%= driverFullName %></td>
+                        <td style="width: 25%;" valign="top"><strong>Full Name:</strong><br><%= clientPickUpFullName %>
+                        </td>
+                        <td style="width: 25%;" valign="top"><strong>Full Name:</strong><br><%= driverFullName %></td>
+                        <td style="width: 25%;" valign="top"><strong>Full
+                                Name:</strong><br><%= clientDeliveryFullName %></td>
+                    </tr>
+                </table>
+                <hr>
+                <table class="left">
+                    <tr>
+                        <td style="width: 25%;"><strong>Address:</strong><br> <%= driverPickUpAddress.address %>,
+                            <%= driverPickUpAddress.city %>
+                            , <%= driverPickUpAddress.state %>, <%= driverPickUpAddress.zipCode %><br>
+                            <strong>Date:</strong><br> <%=driverPickUpDate%>
+                        </td>
+                        <td style="width: 25%;"><strong>Address:</strong><br> <%= clientPickUpAddress.address %>,
+                            <%= clientPickUpAddress.city %>
+                            , <%= clientPickUpAddress.state %>, <%= clientPickUpAddress.zipCode %><br>
+                            <strong>Date:</strong><br> <%=clientPickUpDate%>
+                        </td>
+                        <td style="width: 25%;"><strong>Address:</strong><br> <%= driverDeliveryAddress.address %>,
+                            <%= driverDeliveryAddress.city %>
+                            , <%= driverDeliveryAddress.state %>, <%= driverDeliveryAddress.zipCode %><br>
+                            <strong>Date:</strong><br> <%=driverDeliveryDate%>
+                        </td>
+                        <td style="width: 25%;"><strong>Address:</strong><br> <%= clientDeliveryAddress.address %>,
+                            <%= clientDeliveryAddress.city %>
+                            , <%= clientDeliveryAddress.state %>, <%= clientDeliveryAddress.zipCode %><br>
+                            <strong>Date:</strong><br> <%=clientDeliveryDate%>
+                        </td>
+                    </tr>
+                </table>
+                <hr>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

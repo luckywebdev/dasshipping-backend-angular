@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .pickup, .delivery {
+            float: left;
+            padding: 15px 0;
+            width: 33%;
+        }
+        .trailer-type {
+            float: right;
+            padding: 15px 0;
+            width: 34%;
+        }
+
+        .car {
+            padding: 15px 0;
+            width: 100%;
+        }
+
+        .input-style {
+            background-color: white;
+            padding: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            border: 1px solid gray;
+        }
+
+        .input-style-note {
+            min-height: 100px;
+            white-space: normal;
+            overflow: inherit;
+        }
+
+        .small-input-left {
+            width: auto;
+        }
+
+        #name {
+            color: #495d79;
+            margin-bottom: 20px;
+            font-size: 25px;
+        }
+
+        #location {
+            margin: 0 50px;
+            padding: 50px;
+            background-color: #f4f6f6;
+            color: #5b5f61;
+        }
+
+        #mobile-app {
+            margin: 0 50px;
+            padding: 0 50px;
+        }
+
+        .delivery-child {
+            width: 95%;
+            margin-right: 0;
+            margin-left: auto;
+        }
+
+        #estimated-price {
+            color: #7a90ad;
+            margin-bottom: 55px;
+            font-size: 25px;
+        }
+
+        #get-app {
+            padding: 30px;
+            text-align: center;
+            color: #414d60;
+        }
+
+        .footer-info {
+            color: #414d60;
+            width: 30%;
+            min-width: 120px;
+            display: inline-block;
+        }
+
+        @media (max-width: 750px) {
+            .pickup, .delivery, .trailer-type, .delivery-child {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <img src="<%= domain %>/images/header.png" width="100%" alt="header logo">
+</header>
+<div class="content">
+    <div style="margin: 50px 100px;">
+        <p class="bold" id="name">DEAR <%= firstName %> <%= lastName %>!</p>
+        <p id="estimated-price">The estimated price for shipping is <strong><%= priceWithDiscount %>$</strong></p>
+    </div>
+
+    <div id="location">
+        <div class="pickup">
+            <div>
+                <label class="bold">PICK UP LOCATION</label>
+                <div class="input-style small-input-left">
+                    <i><%= pickLocation %></i>
+                </div>
+            </div>
+        </div>
+        <div class="delivery">
+            <div class="small-input-right delivery-child">
+                <label class="bold" style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;display: block;">DELIVERY DESTINATION</label>
+                <div class="input-style">
+                    <i><%= deliveryLocation %></i>
+                </div>
+            </div>
+        </div>
+        <div class="trailer-type">
+            <div class="small-input-right delivery-child">
+                <label class="bold">TRAILER TYPE</label>
+                <div class="input-style">
+                    <i><%= trailerType %></i>
+                </div>
+            </div>
+        </div>
+
+        <% cars.forEach((car, index) => {%>
+            <div class="car">
+                <label class="bold">CAR <%=index + 1%></label>
+                <div class="input-style"><%=car.make%>, <%=car.year%>, <%=car.model%>, <%=car.inop ? inoperable : operable%></div>
+            </div>
+        <% }) %>
+        <div class="car">
+            <div class="input-style input-style-note"><%=notes%></div>
+        </div>
+    </div>
+    <h2 id="get-app">GET OUR CUSTOMER MOBILE APP</h2>
+    <div id="mobile-app">
+        <div style="display: inline-block; width: 49%;vertical-align: top; margin-left: -60px;">
+            <img src="<%= domain %>/images/hand.png" width="100%" alt="phone">
+        </div>
+        <div style="display: inline-block; width: 50%;vertical-align: top;">
+            <p style="color: #495d79;" class="bold">WE ARE PROVIDING A MOBILE SOLUTION TO:</p>
+            <div style="color: #7188a8; line-height: 25px;">
+                Get instant shipping quote, order tracking, drivel location and delivery time, access inspection results
+                and
+                many other things just with one tap.
+                <br>
+                <br>
+                Enough about us, download the app and see for yourself!
+                <br>
+                <br>
+                <div>
+                    <a href="<%=androidUrl%>"><img src="<%= domain %>/images/GooglePlay1.png" style="width: 49%" alt="googlPlay"></a>
+                    <a href="<%=iosUrl%>"><img src="<%= domain %>/images/appStore.png" style="width: 49%" alt="appStore"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer style="margin: 20px 100px">
+    <div style="padding: 20px 0;">
+        <div style="display: inline-block; width: 40%;">
+            <img src="<%= domain %>/images/car-logo.png" alt="car-logo">
+        </div>
+        <div style="width: 60%; float: right; padding: 20px 0; text-align: right;">
+            <span class="footer-info">
+                <a class="footer-info" href="mailto:<%=contactInfo.EMAIL%>" style="text-decoration: none;">
+                    <%=contactInfo.EMAIL%>
+                </a>
+            </span>
+            <span class="footer-info">
+                <a class="footer-info" href="tel:<%=contactInfo.PHONE%>" style="text-decoration: none;">
+                    <%=contactInfo.PHONE%>
+                </a>
+            </span>
+            <span class="footer-info">
+                <a class="footer-info" href="https://<%=contactInfo.LANDING%>" style="text-decoration: none;">
+                    <%=contactInfo.LANDING%>
+                </a>
+            </span>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

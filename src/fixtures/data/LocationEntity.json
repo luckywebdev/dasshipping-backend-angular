@@ -1,0 +1,138 @@
+[
+  {
+    "id": 1,
+    "state": "Alabama",
+    "city": "Butler",
+    "zipCode": 36904,
+    "address": "350 Park Boulevard",
+    "addressType": 123,
+    "instructions": null,
+    "lat": 32.1279455,
+    "lon": -88.3312513,
+    "point": {
+      "type": "Point",
+      "coordinates": [32.1279455, -88.3312513]
+    },
+    "createdAt": "2020-01-15 14:43:21.857813",
+    "updatedAt": "2020-01-15 14:43:21.857813"
+  },
+  {
+    "id": 2,
+    "state": "Alabama",
+    "city": "Huntsville",
+    "zipCode": 35801,
+    "address": "100 Park Boulevard",
+    "addressType": 123,
+    "instructions": null,
+    "lat": 34.74679,
+    "lon": -86.68826,
+    "point": {
+      "type": "Point",
+      "coordinates": [34.74679, -86.68826]
+    },
+    "createdAt": "2020-01-15 14:43:21.857813",
+    "updatedAt": "2020-01-15 14:43:21.857813"
+  },
+  {
+    "id": 3,
+    "state": "Alabama",
+    "city": "Butler",
+    "zipCode": 36904,
+    "address": "350 Park Boulevard",
+    "addressType": 123,
+    "instructions": null,
+    "lat": 32.1279455,
+    "lon": -88.3312513,
+    "point": {
+      "type": "Point",
+      "coordinates": [32.1279455, -88.3312513]
+    },
+    "createdAt": "2020-01-15 14:43:21.857813",
+    "updatedAt": "2020-01-15 14:43:21.857813"
+  },
+  {
+    "id": 4,
+    "state": "Alabama",
+    "city": "Huntsville",
+    "zipCode": 35801,
+    "address": "100 Park Boulevard",
+    "addressType": 123,
+    "instructions": null,
+    "lat": 34.74679,
+    "lon": -86.68826,
+    "point": {
+      "type": "Point",
+      "coordinates": [34.74679, -86.68826]
+    },
+    "createdAt": "2020-01-15 14:43:21.857813",
+    "updatedAt": "2020-01-15 14:43:21.857813"
+  },
+  {
+    "id": 5,
+    "state": "Alabama",
+    "city": "Butler",
+    "zipCode": 36904,
+    "address": "350 Park Boulevard",
+    "addressType": 123,
+    "instructions": null,
+    "lat": 32.1279455,
+    "lon": -88.3312513,
+    "point": {
+      "type": "Point",
+      "coordinates": [32.1279455, -88.3312513]
+    },
+    "createdAt": "2020-01-15 14:43:21.857813",
+    "updatedAt": "2020-01-15 14:43:21.857813"
+  },
+  {
+    "id": 6,
+    "state": "Alabama",
+    "city": "Huntsville",
+    "zipCode": 35801,
+    "address": "100 Park Boulevard",
+    "addressType": 123,
+    "instructions": null,
+    "lat": 34.74679,
+    "lon": -86.68826,
+    "point": {
+      "type": "Point",
+      "coordinates": [34.74679, -86.68826]
+    },
+    "createdAt": "2020-01-15 14:43:21.857813",
+    "updatedAt": "2020-01-15 14:43:21.857813"
+  },
+  {
+    "id": 7,
+    "state": "Alabama",
+    "city": "Butler",
+    "zipCode": 36904,
+    "address": "350 Park Boulevard",
+    "addressType": 123,
+    "instructions": null,
+    "lat": 32.1279455,
+    "lon": -88.3312513,
+    "point": {
+      "type": "Point",
+      "coordinates": [32.1279455, -88.3312513]
+    },
+    "createdAt": "2020-01-15 14:43:21.857813",
+    "updatedAt": "2020-01-15 14:43:21.857813"
+  },
+  {
+    "id": 8,
+    "state": "Alabama",
+    "city": "Huntsville",
+    "zipCode": 35801,
+    "address": "100 Park Boulevard",
+    "addressType": 123,
+    "instructions": null,
+    "lat": 34.74679,
+    "lon": -86.68826,
+    "point": {
+      "type": "Point",
+      "coordinates": [34.74679, -86.68826]
+    },
+    "createdAt": "2020-01-15 14:43:21.857813",
+    "updatedAt": "2020-01-15 14:43:21.857813"
+  }
+]

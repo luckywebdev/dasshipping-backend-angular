@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+    </style>
+</head>
+
+<body style="margin: 0; padding: 0;">
+    <table border="0" cellpadding="0" cellspacing="0" width="850">
+        <tr>
+            <td>
+                <img src="<%=domain%>/images/header_email.png" alt="header" width="850" height="206"
+                    style="display: block; object-fit: contain;" />
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 40px 125px 20px 125px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td align="center" style="font-family: 'Poppins', sans-serif; font-size: 20px; line-height: 52px; color:
+                            #414D60; font-weight: bold;">
+                            DISPATCH SHEET OFFER
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="font-family: 'Poppins', sans-serif; font-size: 20px; line-height: 52px; color:
+                            #414D60; font-weight: bold;">
+                            # <%=orderUuid%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 44px; color:
+                            #495D79; font-weight: 600;">
+                            Dear, <%=companyName%>!
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; color:
+                            #7188A8;">
+                            Here are your offer details.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="#F4F5F5" style="padding: 34px 36px 30px 32px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="center" style="font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 44px; color:
+                                        #495D79; font-weight: 600;">
+                                        DISPATCH OFFER
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" bgcolor="#F9FBFB"
+                                        style="padding: 16px 19px; border: 1px solid #DDE1E1;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                                <td align="left" style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 14px; color:
+                                                #494E68; font-weight: 600;"><%=pickupLocation%></td>
+                                                <td align="center">
+                                                    <img src="<%=domain%>/images/distance_email.png" alt="distance"
+                                                        width="200" height="15"
+                                                        style="display: block; object-fit: contain;" />
+                                                </td>
+                                                <td align="right" style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 14px; color:
+                                                #494E68; font-weight: 600;"><%=deliveryLocation%></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 0; line-height: 0;" height="10">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 14px; color:
+                                                #7188A8;"><%=pickDate%></td>
+                                                <td align="center" style="font-family: 'Poppins', sans-serif; font-size: 12px; line-height: 12px; color:
+                                                #7188A8; font-weight: 500;"><%=distance%> miles</td>
+                                                <td align="right" style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 14px; color:
+                                                #7188A8;"><%=deliveryDate%></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 0; line-height: 0;" height="10">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td align="center" style="margin-top: 13px; font-family: 'Poppins', sans-serif; font-size: 12px; line-height: 12px; color:
+                                                #7188A8; font-weight: 600;"><%=condition%></td>
+                                                <td align="right" style="font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 16px; color:
+                                                   #FFA000; font-weight: 600;">
+                                                    $<%=price%>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 0; line-height: 0;" height="10">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 50px; color:
+                                        #495D79; font-weight: 600;">
+                                        Number of cars included:
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <% cars.forEach((car) => {%>
+                                            <tr>
+                                                <td align="left" width="50">
+                                                    <img src="<%=car.logo%>" alt="header" width="45" height="45"
+                                                        style="display: block; object-fit: contain;" />
+                                                </td>
+                                                <td align="left" style="font-family: 'Poppins', sans-serif; font-size: 12px; line-height: 12px; color:
+                                                   #506165; font-weight: 600;">
+                                                    <%=car.year%> <%=car.make%> <%=car.model%>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 0; line-height: 0;" height="25">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="left" height="50">
+                                        <a href="<%=denyUrl%>" style="background-color: #ffffff; border: 1px solid #966FBE; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 14px; color:
+                                        #966FBE; text-decoration: none; padding: 14px 85px;">
+                                            Declne
+                                        </a>
+                                    </td>
+                                    <td align="right" height="50">
+                                        <a href="<%=acceptUrl%>" style="background-color: #966FBE; border: 1px solid #966FBE; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 14px; color:
+                                        #FBFBFB; text-decoration: none; padding: 14px 84px;">
+                                            Accept
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" bgcolor="#F5F5F5" style="padding: 26px 126px 40px 126px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td align="left">
+                            <img src="<%=domain%>/images/car-logo.png" alt="logo" width="126" height="47"
+                                style="display: block; object-fit: contain;" />
+                        </td>
+                        <td align="right">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="right">
+                                        <a href="mailto:<%=contactInfo.EMAIL%>" target="_top" style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 38px; color:
+                                        #414D60; text-decoration: none;">
+                                            <%=contactInfo.EMAIL%>
+                                        </a>
+                                    </td>
+                                    <td align="right" style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 38px; color:
+                                    #414D60;">
+                                        <a href="tel:<%=contactInfo.PHONE%>" style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 38px; color:
+                                        #414D60; text-decoration: none;"><%=contactInfo.PHONE%></a>
+                                    </td>
+                                    <td align="right">
+                                        <a href="https://<%=contactInfo.LANDING%>" style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 38px; color:
+                                        #414D60; text-decoration: none;">
+                                            <%=contactInfo.LANDING%>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

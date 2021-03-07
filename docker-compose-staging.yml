@@ -1,0 +1,21 @@
+version: "3"
+services:
+  app:
+    stdin_open: true
+    tty: true
+    image: registry.gitlab.com/yota-group/backend:staging
+    command: yarn start:staging
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "db"
+    env_file: ./env/staging.env
+  db:
+    image: kartoza/postgis:11.0-2.5
+    ports:
+      - "5432:5432"
+    volumes:
+      - /data/psql-gis:/var/lib/postgresql
+    env_file: ./env/staging.env
+    restart: always

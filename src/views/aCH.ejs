@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Bank Account</title>
+    <meta name="viewport"
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+
+        .container {
+            border-radius: 5px;
+        }
+
+        #cardForm {
+            height: 100%;
+            margin: 25px 16px 20px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        .textfield--float-label {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .image-block {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .hosted-field--label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #506165;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .hosted-field {
+            min-width: 250px;
+            margin-bottom: 10px;
+            height: 28px;
+            display: block;
+            background-color: transparent;
+            font-size: 16px;
+            font-weight: normal;
+            color: #506165;
+            font-family: 'Poppins', sans-serif;
+            border-bottom: 1px solid #969FA6;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            outline: none;
+            border-radius: 0;
+            position: relative;
+            box-shadow: none;
+            padding: 3px 0;
+        }
+
+        .panel__footer {
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pay-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #7852A9;
+            background: linear-gradient(274deg, #BE49DF 0%, #8A66B7 100%);
+            font-size: 16px;
+            font-weight: normal;
+            color: #FFFFFF;
+            font-family: 'Poppins', sans-serif;
+            width: 145px;
+            height: 38px;
+            border-radius: 20px;
+            outline: none;
+            box-shadow: none;
+        }
+
+        img {
+            width: 170px;
+            height: 105px;
+        }
+
+        .input-radio {
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            min-width: 250px;
+            width: 100%;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        .input-radio input:not(:checked) {
+            color: #FFFFFF;
+            background-color: #FFFFFF;
+            border: 1px solid #8A66B7;
+        }
+
+        .input-radio input:checked {
+            background-color: #8A66B7;
+            color: #FFFFFF;
+            border: 1px solid #8A66B7;
+        }
+
+        .second-input {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body class="container">
+    <form id="cardForm" onSubmit="return addACH(this)">
+        <div class="image-block">
+            <img src="<%=domain%>/images/bank_icon.png" alt="">
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="first-name"> FIRST NAME</label>
+            <input type="text" id="first-name" name="firstName" class="hosted-field" placeholder="Tap to enter"
+                   required />
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="last-name"> LAST NAME</label>
+            <input type="text" id="last-name" name="lastName" class="hosted-field" placeholder="Tap to enter"
+                   required />
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="ownership-type"> TYPE</label>
+            <div class="input-radio">
+                <input type="radio" name="ownershipType" id="personal" value="personal" required checked>
+                <label for="personal">Personal</label>
+                <input type="radio" class="second-input" name="ownershipType" id="business" value="business" required>
+                <label for="business">Business</label>
+            </div>
+        </div>
+        <div class="textfield--float-label" id="businessNameBlock" style="display: none;">
+            <label class="hosted-field--label" for="business-name"> BUSINESS NAME</label>
+            <input type="text" id="business-name" name="businessName" class="hosted-field" placeholder="Tap to enter" />
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="account-number"> ACCOUNT NUMBER</label>
+            <input type="text" id="account-number" name="accountNumber" class="hosted-field" placeholder=".........."
+                required />
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="routing-number">ROUTING NUMBER</label>
+            <input type="text" id="routing-number" name="routingNumber" class="hosted-field" placeholder="........."
+                required />
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="street-address"> STREET ADDRESS</label>
+            <input type="text" id="street-address" name="streetAddress" class="hosted-field" placeholder="Tap to enter"
+                required />
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="locality"> City</label>
+            <input type="text" id="locality" name="locality" class="hosted-field" placeholder="Tap to enter" required />
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="region"> State</label>
+            <input type="text" id="region" name="region" class="hosted-field" placeholder="Tap to enter" required />
+        </div>
+        <div class="textfield--float-label">
+            <label class="hosted-field--label" for="postal-code"> ZIP CODE</label>
+            <input type="text" id="postal-code" name="postalCode" class="hosted-field" placeholder="Tap to enter"
+                required />
+        </div>
+        <div class="panel__footer">
+            <button type="submit" class="pay-button" id="add-ach">Add</button>
+        </div>
+    </form>
+
+    <script src="https://js.braintreegateway.com/web/3.55.0/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.55.0/js/us-bank-account.min.js"></script>
+
+    <script>
+        const token = '<%= clientToken %>';
+        const account = {
+            firstName: '<%= firstName %>',
+            lastName: '<%= lastName %>',
+            postalCode: '<%= postalCode %>',
+            locality: '<%= city %>',
+            region: '<%= state %>',
+            streetAddress: '<%= address %>',
+        };
+
+        const submitButton = document.getElementById('add-ach');
+        let usBankAccountFun = null;
+        submitButton.setAttribute("disabled", "disabled");
+        submitButton.setAttribute('style', 'background-color: rgba(47, 55, 73, 0.6);background: rgba(47, 55, 73, 0.6);');
+
+        braintree.client.create({
+            authorization: token
+        }, (err, clientInstance) => {
+            if (err) {
+                if (window && window.ReactNativeWebView) {
+                    setTimeout(() => {
+                        window.ReactNativeWebView.postMessage(JSON.stringify({ success: false, click: false, ...err }));
+                    }, 1000);
+                }
+                submitButton.setAttribute("disabled", "disabled");
+                submitButton.setAttribute('style', 'background-color: rgba(47, 55, 73, 0.6);background: rgba(47, 55, 73, 0.6);');
+                return;
+            }
+
+            braintree.usBankAccount.create({
+                client: clientInstance
+            }).then((usBankAccountInstance) => {
+                if (account && Object.keys(account).length) {
+                    if (account.firstName) {
+                        const firstName = document.getElementById('first-name');
+                        firstName.value = account.firstName;
+                    }
+                    if (account.lastName) {
+                        const lastName = document.getElementById('last-name');
+                        lastName.value = account.lastName;
+                    }
+                    if (account.postalCode) {
+                        const postalCode = document.getElementById('postal-code');
+                        postalCode.value = account.postalCode;
+                    }
+                    if (account.locality) {
+                        const locality = document.getElementById('locality');
+                        locality.value = account.locality;
+                    }
+                    if (account.region) {
+                        const region = document.getElementById('region');
+                        region.value = account.region;
+                    }
+                    if (account.streetAddress) {
+                        const streetAddress = document.getElementById('street-address');
+                        streetAddress.value = account.streetAddress;
+                    }
+                }
+                submitButton.removeAttribute("disabled");
+                submitButton.removeAttribute('style');
+                usBankAccountFun = usBankAccountInstance;
+            }).catch(err => {
+                if (window && window.ReactNativeWebView) {
+                    setTimeout(() => {
+                        window.ReactNativeWebView.postMessage(JSON.stringify({ success: false, click: false, ...err }));
+                    }, 1000);
+                }
+                submitButton.setAttribute("disabled", "disabled");
+                submitButton.setAttribute('style', 'background-color: rgba(47, 55, 73, 0.6);background: rgba(47, 55, 73, 0.6);');
+                return;
+            });
+        });
+        const typeElement = document.getElementById('personal');
+        typeElement.addEventListener('change', (event) => {
+            const block = document.getElementById('businessNameBlock');
+            block.setAttribute('style', 'display: none;');
+        });
+        const typeElementB = document.getElementById('business');
+        typeElementB.addEventListener('change', (event) => {
+            const block = document.getElementById('businessNameBlock');
+            block.removeAttribute('style');
+        });
+
+        const formElement = document.getElementById('cardForm');
+        formElement.addEventListener('click', (e) => {
+            submitButton.removeAttribute("disabled");
+            submitButton.removeAttribute('style');
+        });
+
+        function addACH(form) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({ success: true, click: true }));
+            if (!!usBankAccountFun) {
+                const { accountNumber, routingNumber, ownershipType, firstName, lastName, streetAddress, locality, region, postalCode, businessName } = form;
+                let bankDetails = {
+                    accountNumber: accountNumber.value,
+                    routingNumber: routingNumber.value,
+                    accountType: 'checking',
+                    ownershipType: ownershipType.value,
+                    firstName: firstName.value,
+                    lastName: lastName.value,
+                    billingAddress: {
+                        streetAddress: streetAddress.value,
+                        locality: locality.value,
+                        region: region.value,
+                        postalCode: postalCode.value
+                    },
+                };
+
+                if (ownershipType.value === 'business') {
+                    bankDetails = { ...bankDetails, businessName: businessName.value };
+                }
+                usBankAccountFun.tokenize({
+                    mandateText: 'I authorize Braintree to debit my bank account on behalf of My Online Store.',
+                    bankDetails: bankDetails
+                }).then((tokenizeEtokenizedPayload) => {
+                    if (window && window.ReactNativeWebView) {
+                        setTimeout(() => {
+                            window.ReactNativeWebView.postMessage(JSON.stringify({ success: true, click: false, ...tokenizeEtokenizedPayload }));
+                        }, 1000);
+                    }
+                    submitButton.removeAttribute("disabled");
+                    submitButton.removeAttribute('style');
+                }).catch(err => {
+                    if (window && window.ReactNativeWebView) {
+                        setTimeout(() => {
+                            window.ReactNativeWebView.postMessage(JSON.stringify({ success: false, click: false, ...err }));
+                        }, 1000);
+                    }
+                    submitButton.setAttribute("disabled", "disabled");
+                    submitButton.setAttribute('style', 'background-color: rgba(47, 55, 73, 0.6);background: rgba(47, 55, 73, 0.6);');
+                })
+            }
+            return false;
+        }
+    </script>
+</body>
+
+</html>

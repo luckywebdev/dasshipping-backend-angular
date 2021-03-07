@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "phoneNumber": "0123456789",
+    "email": "email@test.com",
+    "firstName": "test",
+    "lastName": "test",
+    "hash": null,
+    "createdAt": "2020-01-15 14:43:21.857813"
+  },
+  {
+    "id": 2,
+    "phoneNumber": "0123456789",
+    "email": "email@test.com",
+    "firstName": "test",
+    "lastName": "test",
+    "hash": null,
+    "createdAt": "2020-01-15 14:43:21.857813"
+  }
+]

@@ -1,0 +1,11 @@
+[
+  "NotificationEntity",
+  "VirtualAccountEntity",
+  "LocationEntity",
+  "OrderEntity",
+  "DispatchEntity",
+  "CarEntity",
+  "OrderTimelineEntity",
+  "TripEntity",
+  "OrderToTripEntity"
+]

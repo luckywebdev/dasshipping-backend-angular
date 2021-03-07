@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+
+        body {
+            margin: 0;
+            font-style: normal;
+            font-size: 13px;
+            line-height: 18px;
+            letter-spacing: 0.15em;
+            color: rgba(47, 55, 73, 0.9);
+            font-family: Open Sans;
+            width: 595px;
+            height: 714px;
+        }
+
+        .header-rectangle {
+            width: calc(100% - 200px);
+            height: 70px;
+            background-image: url("<%=domain%>/images/Rectangle.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .logo {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 165px;
+            height: 25px;
+            z-index: 1;
+            padding: 25px 15px 20px 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .content {
+            width: 100%;
+        }
+
+        .company-name {
+            font-size: 7px;
+            padding-right: 10px;
+            float: right;
+            letter-spacing: 0.10em;
+            text-align: right;
+            line-height: 12px;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+            color: black;
+        }
+
+        .title span:first-child {
+            color: rgba(0, 185, 224, 0.8);
+            font-size: 16px;
+            line-height: 15px;
+            text-align: right;
+        }
+
+        .info {
+            padding: 20px 35px;
+            font-size: 10px;
+        }
+
+        table {
+            font-size: 10px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table td, table th {
+            border-right: 1px solid rgba(0, 185, 224, 0.7);
+            padding: 2px 2px 2px 15px;
+            text-align: left;
+            height: 30px;
+        }
+
+        td:first-child, th:first-child {
+            border-left: none;
+        }
+
+        td:last-child, th:last-child {
+            border-right: none;
+        }
+
+        table tr {
+            border-top: 1px solid rgba(0, 185, 224, 0.7);
+            border-bottom: 1px solid rgba(0, 185, 224, 0.7);
+        }
+
+        .details-link span {
+            height: 20px;
+            background: rgba(47, 55, 73, 0.2);
+            border-radius: 4px;
+            display: inline-block;
+            padding: 0 3px;
+        }
+
+        a {
+            color: #9a2ae0;
+            text-decoration: none;
+        }
+
+        .info-block {
+            display: table-cell;
+            width: 50%;
+            position: relative;
+            white-space: normal;
+            padding: 10px 0 10px 0;
+        }
+
+        .border-bottom:before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            height: 1px;
+            width: 90%;
+            margin: auto;
+            border-bottom: 1px solid rgba(0, 185, 224, 0.7);
+        }
+
+        .border-right:after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 5%;
+            height: 90%;
+            width: 1px;
+            margin: auto;
+            border-right: 1px solid rgba(0, 185, 224, 0.7);
+        }
+
+        hr {
+            border-top: 1px solid rgba(0, 185, 224, 0.7);
+        }
+    </style>
+</head>
+<body>
+<header style="position: relative" id="pageHeader">
+    <div class="header-rectangle"></div>
+    <div class="logo">
+            <%= order.company.name %>
+    </div>
+</header>
+<div class="content" id="pageContent">
+    <div style="width: 100%; height: 55px;">
+        <div class="company-name">
+                <%= order.company.address %>,
+                <br>
+                <%= order.company.city %>,
+                <%= order.company.state %>,
+                <%= order.company.zip %>
+                <br>
+                Phone: <%= order.company.officePhone %>
+                <br>
+                E-mail: <%= order.company.email %>
+        </div>
+    </div>
+    <div class="title">
+        <span>INVOICE</span> 
+        <%if (order.externalId) { %>
+            <span>for load ID <%= order.externalId %></span>
+        <% } else{ %>  
+            <span>for load ID <%= order.uuid %></span>
+        <% } %>
+    </div>
+    <div class="info">
+        <div style="width: 100%; white-space: nowrap; display: table;">
+            <div class="info-block border-bottom border-right" style="padding-right: 10px; height: 100px;">
+                <%if (order.externalId) { %>
+                    <span><string>Invoice #:</string> <%= order.externalId %></span><br>
+                <% } else{ %>  
+                    <span><string>Invoice #:</string> <%= order.uuid %></span><br>
+                <% } %>
+                <span><strong>Date: </strong> <%= invoiceDate %></span><br>
+                <span><strong>Payment Terms: </strong><%= order.paymentNote %></span><br>
+            </div>
+            <div class="info-block border-bottom" style="padding-left: 10px;">
+                <span><strong>BILL TO</strong></span><br>
+                <span><strong><%= order.shipper.companyName %></strong></span><br>
+                <span><%= order.shipper.address %>,
+                     <%= order.shipper.city %>, <%= order.shipper.state %>
+                    , <%= order.shipper.zipCode %>
+                </span><br>
+                <span><strong>Phone: </strong><%= order.shipper.phone %></span>
+            </div>
+        </div>
+        <div style="width: 100%; white-space: nowrap; display: table;">
+            <div class="info-block border-right" style="padding-right: 10px; height: 100px;">
+                <span><strong>ORIGIN</strong></span><br>
+                <span><%= order.pickLocation.address %>, <%= order.pickLocation.city %>
+                    , <%= order.pickLocation.state %>, <%= order.pickLocation.zipCode %></span><br>
+                <span><strong>Contact: </strong><%= order.sender.firstName + ' ' + order.sender.lastName %></span><br>
+                <span><strong>Email: </strong><%= order.sender.email %></span><br>
+                <span><strong>Phone: </strong><%= order.sender.phoneNumber %></span><br>
+                <span><strong>Address Type: </strong><%= order.pickLocation.addressType %></span>
+            </div>
+            <div class="info-block" style="padding-left: 10px;">
+                <span><strong>DESTINATION</strong></span><br>
+                <span><%= order.deliveryLocation.address %>,
+                         <%= order.deliveryLocation.city %>, <%= order.deliveryLocation.state %>
+                        , <%= order.deliveryLocation.zipCode %></span><br>
+                <span><strong>Contact: </strong><%= order.receiver.firstName + ' ' + order.receiver.lastName %></span><br>
+                <span><strong>Email: </strong><%= order.receiver.email %></span><br>
+                <span><strong>Phone: </strong><%= order.receiver.phoneNumber %></span><br>
+                <span><strong>Address Type: </strong><%= order.deliveryLocation.addressType %></span>
+            </div>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <th style="width: 80%">Description</th>
+                    <th style="width: 20%">Line Total</th>
+                </tr>
+                <% for(var car of order.cars) { %>
+                    <tr>
+                        <td style="width: 80%">
+                            <span><%= car.year + ' ' + car.make + ' ' + car.model %></span><br>
+                            <span>VIN: <%= car.vin %>. Type: <%= car.type %></span>
+                        </td>
+                        <td style="width: 20%"></td>
+                    </tr>
+                <% } %>
+                <tr>
+                    <td style="width: 80%"><strong>Total Due:</strong></td>
+                    <td style="width: 20%"><strong>$<%= salePrice %></strong></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

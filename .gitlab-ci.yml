@@ -1,0 +1,64 @@
+image: docker:latest
+
+variables:
+  IP_STAGING: 159.203.94.156
+  HOST_STAGING: root@$IP_STAGING
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  PROD_IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  APP_DIR: /root/app
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+
+  COMMAND_UPGRADE: "docker-compose stop app && docker-compose rm -f && sleep 10 && docker-compose up --remove-orphans --no-deps -d app"
+
+services:
+  - docker:18-dind
+
+stages:
+  - build
+  - deploy
+
+job_build:
+  stage: build
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker build --force-rm --no-cache --pull -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  only:
+    - staging
+
+job_build_prod:
+  stage: build
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker build --force-rm --no-cache --pull -t $PROD_IMAGE_TAG .
+    - docker push $PROD_IMAGE_TAG
+  only:
+    - production
+  tags:
+    - docker-private-runner
+
+job_deploy_staging:
+  stage: deploy
+  environment:
+    name: staging
+    url: http://IP_STAGING
+  only:
+    - staging
+  before_script:
+    - mkdir -p ~/.ssh
+    - 'echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - apk --no-cache add openssh-client curl
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval $(ssh-agent -s)
+    - ssh-add
+  script:
+    - ssh $HOST_STAGING docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - ssh $HOST_STAGING docker pull $IMAGE_TAG
+    - scp docker-compose-staging.yml $HOST_STAGING:$APP_DIR/docker-compose.yml
+    - 'ssh $HOST_STAGING "cd $APP_DIR; $COMMAND_UPGRADE"'
+  after_script:
+    - rm -f ~/.ssh/id_rsa
